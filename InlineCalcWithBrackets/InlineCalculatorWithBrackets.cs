@@ -5,17 +5,21 @@ using System.Text;
 
 namespace InlineCalc
 {
-    class Program
+    public class InlineCalculatorWithBrackets
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"Answer is: {StringCalculator(Console.ReadLine().Replace("-", "+-"))}");//we don't calculate miunus so replace it with '+-'
+            Console.WriteLine($"Answer is: {StringCalculator(Console.ReadLine())}");
 
         }
-        static double StringCalculator(string inlineStr)
+        public static double StringCalculator(string inlineStr)
         {
             char[] operators = { '*', '/', '+' };
 
+            if (!inlineStr.Contains("+-"))//we don't calculate miunus so replace it with '+-'
+            {
+                inlineStr=inlineStr.Replace("-", "+-");
+            }
             if (CheckString(inlineStr, "()".ToCharArray()) && inlineStr.IndexOf('(') != -1)//If string contains brackets 
             {
                 int tmpfirst = inlineStr.IndexOf('(');
@@ -75,7 +79,7 @@ namespace InlineCalc
             }
             double resultNumber;
             if (Double.TryParse(inlineStr, out resultNumber))
-                return resultNumber;
+                return Math.Round(resultNumber, 2);
             else
                 Console.WriteLine("Wrong line");
             System.Environment.Exit(-1);
